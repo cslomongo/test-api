@@ -1,6 +1,6 @@
 from django.shortcuts import render
 
-from rest_framework import generics
+from rest_framework import generics, permissions, authentication 
 
 from .models import Items,Locations
 from api.serializers import LocationSerializer, ItemSerializer
@@ -9,6 +9,8 @@ from api.serializers import LocationSerializer, ItemSerializer
 
 class ItemList(generics.ListCreateAPIView):
     serializer_class = ItemSerializer
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    authentication_classes = [authentication.SessionAuthentication]
 
     def get_queryset(self):
         queryset = Items.objects.all()
@@ -25,6 +27,7 @@ class ItemDetails(generics.RetrieveUpdateDestroyAPIView):
 class LocationList(generics.ListCreateAPIView):
     serializer_class = LocationSerializer
     queryset = Locations.objects.all()
+
 
 class LocationDetails(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = LocationSerializer

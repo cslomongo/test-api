@@ -12,3 +12,6 @@ class Items(models.Model):
     itemDetail = models.TextField(default=None, null=True)
     itemLocation = models.ForeignKey(Locations,on_delete=models.CASCADE)
 
+    def __str__(self):
+        return self.item
+
